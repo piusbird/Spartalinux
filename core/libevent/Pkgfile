@@ -1,0 +1,16 @@
+# Description: Event driven programing libary
+# URL  https://tmux.github.io/        
+# Maintainer:  Sparta Developers <changeme@example.com>
+
+name=libevent
+version=2.1.8
+release=1
+source=(https://github.com/$name/$name/releases/download/release-$version-stable/$name-$version-stable.tar.gz)
+
+build() {
+  cd $name-$version-stable
+  ./configure --disable-openssl --prefix=/usr 
+  make
+  make DESTDIR=$PKG install
+ 
+}

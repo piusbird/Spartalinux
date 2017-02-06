@@ -1,0 +1,16 @@
+# Description: Tmux Terminal Multiplexer
+# URL  https://tmux.github.io/        
+# Maintainer:  Sparta Developers <changeme@example.com>
+
+name=tmux
+version=2.3
+release=1
+source=(https://github.com/$name/$name/releases/download/$version/$name-$version.tar.gz)
+
+build() {
+  cd $name-$version
+  ./configure --prefix=/usr 
+  make
+  make DESTDIR=$PKG install
+ 
+}

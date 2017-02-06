@@ -1,0 +1,35 @@
+# Description: Device mapper userspace library
+# URL:         http://sourceware.org/lvm2/
+# Maintainer:  CRUX System Team, core-ports at crux dot nu
+# Depends on:  eudev util-linux
+
+name=libdevmapper
+version=1.02.137
+release=1
+source=(http://mirrors.kernel.org/sources.redhat.com/lvm2/releases/LVM2.2.02.168.tgz)
+
+build() {
+    cd LVM2.2.02.168
+
+    ./configure --prefix=/usr \
+                --exec-prefix= \
+                --datarootdir=/usr \
+                --with-udev-prefix= \
+                --mandir=/usr/share/man \
+                --disable-readline \
+                --enable-pkgconfig \
+                --enable-static_link \
+                --enable-udev_sync \
+                --enable-udev_rules \
+                --with-{user,group}=root
+
+    make device-mapper
+    make DESTDIR=$PKG install_device-mapper
+    install -m0644 -D udev/12-dm-permissions.rules $PKG/etc/udev/rules.d/12-dm-permissions.rules.example
+    
+    # symlink dmsetup to dmstats and not dmsetup.static
+    ln -sf dmsetup $PKG/sbin/dmstats
+    
+    # pkgconfig insists on /lib one or the other way...
+    sed -i '/^libdir=/s|${exec_prefix}|/usr|' $PKG/usr/lib/pkgconfig/devmapper.pc
+}

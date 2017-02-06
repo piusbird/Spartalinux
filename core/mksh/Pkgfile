@@ -1,0 +1,24 @@
+# Description: MirBSD Korn Shell
+# URL  https://www.mirbsd.org/mksh.htm        
+# Maintainer:  Sparta Developers <changeme@example.com>
+
+name=mksh
+version=R54
+release=1
+source=(http://www.mirbsd.org/MirOS/dist/mir/$name/$name-$version.tgz)
+
+build() {
+  cd $name
+  sh Build.sh -r -c lto || sh Build.sh -r || die
+ 
+  install -d $PKG/bin
+  install -d $PKG/usr/share/doc/sparta
+  install -d $PKG/usr/share/man/man1
+
+ install  -c -s -o root -m 555 mksh $PKG/bin/mksh
+ install  -c -o root -m 444 dot.mkshrc $PKG/usr/share/doc/sparta
+ install  -c -m 444  mksh.1 $PKG/usr/share/man/man1/
+ ln -s mksh $PKG/bin/sh
+
+ 
+}

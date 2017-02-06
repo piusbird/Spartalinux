@@ -1,0 +1,45 @@
+# Description: The C library used in the GNU system
+# URL:         http://www.gnu.org/software/libc/
+# Maintainer:  CRUX System Team, core-ports at crux dot nu
+
+name=glibc-32
+version=2.22
+release=1
+source=(http://ftp.gnu.org/gnu/glibc/glibc-$version.tar.xz \
+	http://crux.nu/files/distfiles/kernel-headers-4.1.tar.xz \
+	lib32.conf) 
+
+build() {
+	mkdir build
+	cd build
+
+	export libc_cv_slibdir=/lib32
+	export CC="${CC:-gcc} -m32"
+
+	../glibc-$version/configure --prefix=/usr \
+		--libdir=/usr/lib32 \
+		--libexecdir=/usr/lib32 \
+		--with-headers=$SRC/kernel-headers-4.1/include \
+		--enable-kernel=3.12 \
+		--enable-add-ons \
+		--disable-profile \
+		--without-gd \
+		--enable-obsolete-rpc \
+		--enable-multi-arch \
+		i686-pc-linux-gnu
+
+	make 
+	#make check
+	make install_root=$PKG install
+
+	rm -r $PKG/usr/{bin,sbin,share} $PKG/{etc,sbin} $PKG/var
+
+	mv $PKG/usr/include/gnu/stubs-32.h $SRC
+	rm -r $PKG/usr/include
+	install -D $SRC/stubs-32.h $PKG/usr/include/gnu/stubs-32.h
+
+	install -D $SRC/lib32.conf $PKG/etc/ld.so.conf.d/lib32.conf
+
+	install -d $PKG/lib
+	ln -s /lib32/ld-linux.so.2 $PKG/lib/ld-linux.so.2
+}
