@@ -23,7 +23,7 @@ build() {
                                 --enable-__cxa_atexit \
                                 --enable-clocale=gnu \
                                 --enable-shared \
-				--disable-bootstrap \
+				--enable-bootstrap \
                                 --disable-nls \
                                 --with-x=no \
                                 --with-system-zlib \
