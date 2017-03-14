@@ -1,0 +1,22 @@
+# Description: Enhanced version of the Berkeley C shell (csh)
+# URL:         http://www.tcsh.org
+# Maintainer:  Sparta Developers
+# Depends on:  ncurses
+
+name=tcsh
+version=6.20
+release=1
+source=(ftp://ftp.astron.com/pub/tcsh/$name-$version.00.tar.gz \
+	csh.login csh.logout csh.cshrc)
+
+build() {
+    cd $name-$version.00
+    ./configure --prefix= --mandir=/usr/man
+    make
+    make DESTDIR=$PKG install
+    make DESTDIR=$PKG install.man
+    install -D -m 644 ../csh.login $PKG/etc/csh.login
+    install -D -m 644 ../csh.logout $PKG/etc/csh.logout
+    install -D -m 644 ../csh.cshrc $PKG/etc/csh.cshrc
+    chmod -R +w $PKG
+}

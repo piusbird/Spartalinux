@@ -1,0 +1,35 @@
+# Description: Python 3 Interpreter.
+# URL: http://www.python.org
+# Maintainer: Sparta Developers
+# Packager: James Mills, prologic at shortcircuit dot net dot au
+# Depends on: db gdbm ncurses openssl readline zlib
+
+name=python3
+version=3.6.0
+release=1
+source=(http://python.org/ftp/python/$version/Python-$version.tar.xz)
+
+build() {
+	cd Python-$version
+
+	./configure \
+		--prefix=/usr \
+		--enable-shared \
+		--with-threads \
+		--enable-ipv6
+
+    make 
+    make -j1 DESTDIR=$PKG install
+
+
+	rm -r $PKG/usr/lib/python3.6/{ctypes,sqlite3,tkinter}/test
+	rm -r $PKG/usr/lib/python3.6/{distutils,lib2to3}/tests
+	rm $PKG/usr/lib/python3.6/{distutils,site-packages,test/data}/README
+	rm $PKG/usr/lib/python3.6/idlelib/{ChangeLog,{NEWS,README,TODO}.txt}
+	rm $PKG/usr/lib/python3.6/ctypes/macholib/README.ctypes
+
+	#find $PKG/usr/lib/python3.6/ -type d -name "test" -exec rm -rf {} +
+	#find $PKG/usr/lib/python3.6/ -type d -name "tests" -exec rm -rf {} +
+}
+
+

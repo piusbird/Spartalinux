@@ -1,0 +1,16 @@
+# Description: Badass Commandline FTP client
+# URL  https://lftp.tech        
+# Maintainer:  Sparta Developers <changeme@example.com>
+
+name=lftp
+version=4.7.6
+release=1
+source=(http://lftp.yar.ru/ftp/$name-$version.tar.xz)
+
+build() {
+  cd $name-$version
+  ./configure --prefix=/usr --with-openssl --without-gnutls
+  make
+  make DESTDIR=$PKG install
+ 
+}
