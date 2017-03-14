@@ -3,7 +3,7 @@
 set -e
 build_dirs=(core)
 TOP=`pwd`
-pkgbuild_opts=" -cf $TOP/mk.conf "
+pkgbuild_opts=" -cf $TOP/mk.conf -if "
 for d in ${build_dirs[@]}
 do
 	echo $d
@@ -27,7 +27,6 @@ do
 	echo "$pkg: building package"
 
 	pkgmk -d $pkgbuild_opts
-	pkgmk -uf
 	cd $TOP
 done
 done

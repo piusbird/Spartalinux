@@ -26,6 +26,7 @@ build() {
 				--disable-bootstrap \
                                 --disable-nls \
                                 --with-x=no \
+				--disable-warnings-as-errors \
                                 --with-system-zlib \
                                 --disable-multilib \
                                 --with-pkgversion="sparta-x86_64"
