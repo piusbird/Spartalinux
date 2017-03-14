@@ -1,0 +1,30 @@
+# Description: BSD-like init-scripts
+# 
+# Maintainer:  Matt Arnold, marnold at devio.us
+
+name=bsd-rc
+version=1.15
+release=1
+source=(files/*)
+
+build() {
+    install -d  $PKG/etc/rc.d
+    install -d $PKG/etc/defaults
+    install -m 644 inittab $PKG/etc
+    install -m 755 rc $PKG/etc
+    install -m 755 rc.subr $PKG/etc
+    install -m 755 DAEMON $PKG/etc/rc.d
+    install -m 755 SERVERS $PKG/etc/rc.d
+    install -m 755 LOGIN $PKG/etc/rc.d
+    install -m 755 NETWORKING $PKG/etc/rc.d
+    install -m 755 modules $PKG/etc/rc.d
+    install -m 755 rc.single $PKG/etc
+    install -m 755 rc.multi $PKG/etc
+    install -m 755 local $PKG/etc/rc.d
+    install -m 755 rc.shutdown $PKG/etc
+    install -m 644 rc.conf $PKG/etc
+    install -m 644 rc.default $PKG/etc/defaults/rc.conf
+    install -d $PKG/var/log $PKG/var/lib/urandom
+    touch $PKG/var/log/dmesg $PKG/var/lib/urandom/seed
+    chmod 640 $PKG/var/log/dmesg $PKG/var/lib/urandom/seed
+}

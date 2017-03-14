@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Sparta kmod script
+#
+
+# PROVIDE: modules
+# REQUIRE: earlyboot
+
+
+$_rc_subr_loaded . /etc/rc.subr
+
+name="modules"
+rcvar=$name
+start_cmd="modules_start"
+stop_cmd=":"
+
+modules_start() {
+
+	/sbin/depmod -a
+}

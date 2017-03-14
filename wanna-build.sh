@@ -27,6 +27,7 @@ do
 	echo "$pkg: building package"
 
 	pkgmk -d $pkgbuild_opts
+
 #	pkgmk -uf
 	cd $TOP
 done

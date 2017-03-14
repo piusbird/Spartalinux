@@ -1,0 +1,16 @@
+# Description: BSD-like init Dependacy resolver
+# 
+# Maintainer:  Matt Arnold, marnold at devio.us
+
+name=rcorder
+version=1.0
+release=1
+source=(files/*)
+mandir="/usr/share/man/man8"
+build() {
+    make	
+    install -d  $PKG/sbin
+    install -d $PKG/$mandir
+    install -m 755 rcorder $PKG/sbin
+    install -m 644 rcorder.8 $PKG/$mandir
+}

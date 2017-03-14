@@ -1,0 +1,13 @@
+#
+# /etc/rc.conf: system configuration
+#
+
+FONT=default
+KEYMAP=us
+TIMEZONE=UTC
+HOSTNAME=daystar
+
+# Use PROGRAM=yes to start services 
+# options will be passed on the commandline
+
+# End of file
